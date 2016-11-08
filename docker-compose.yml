@@ -1,0 +1,51 @@
+version: '2'
+
+volumes:
+  url-mysql-data:
+    driver: local
+  url-redis-data:
+    driver: local
+
+services:
+  mysql:
+    image: ambientum/mysql:5.7
+    container_name: url-mysql
+    volumes:
+      - url-mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=url
+      - MYSQL_DATABASE=url
+      - MYSQL_USER=url
+      - MYSQL_PASSWORD=secret
+
+  cache:
+    image: ambientum/redis:3.2
+    container_name: url-redis
+    command: --appendonly yes
+    volumes:
+      - url-redis-data:/data
+    ports:
+      - "6379:6379"
+
+  app:
+    image: ambientum/php:7.0-apache
+    container_name: url-app
+    volumes:
+      - .:/var/www/app
+    ports:
+      - "80:8080"
+    links:
+      - mysql
+      - cache
+
+  queue:
+    image: ambientum/php:7.0
+    container_name: url-queue
+    command: php artisan queue:listen
+    volumes:
+      - .:/var/www/app
+    links:
+      - mysql
+      - cache
