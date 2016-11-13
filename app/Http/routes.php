@@ -11,6 +11,13 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->version();
-});
+$app->get('/urls/{id}', 'UrlController@redirectFromId');
+$app->delete('/urls/{id}', 'UrlController@remove');
+
+$app->get('/stats', 'UrlController@statistics');
+$app->get('/stats/{id}', 'UrlController@view');
+
+$app->post('/users', 'UserController@create');
+$app->delete('/users/{id}', 'UserController@remove');
+$app->post('/users/{userid}/urls', 'UrlController@create');
+$app->get('/users/{userid}/stats', 'UrlController@statisticsByUser');
