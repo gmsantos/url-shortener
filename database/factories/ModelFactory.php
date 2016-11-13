@@ -16,3 +16,10 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
     ];
 });
+
+$factory->define(App\Url::class, function (Faker\Generator $faker) {
+    return [
+        'url' => $faker->url,
+    ];
+});
+
