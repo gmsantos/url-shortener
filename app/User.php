@@ -14,6 +14,13 @@ class User extends Model
     public $timestamps = false;
 
     /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

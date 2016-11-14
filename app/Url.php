@@ -27,7 +27,7 @@ class Url extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function urls()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

@@ -13,7 +13,7 @@
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'id' => $faker->slug(2),
     ];
 });
 
