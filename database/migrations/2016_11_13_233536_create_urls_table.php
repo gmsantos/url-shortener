@@ -15,11 +15,11 @@ class CreateUrlsTable extends Migration
     {
         Schema::create('urls', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('userId');
+            $table->string('user_id');
             $table->integer('hits')->default(0);
             $table->string('url');
 
-            $table->foreign('userId')->references('name')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
     /**
-     * The primary key for the model.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'name';
-
-    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
@@ -26,6 +19,16 @@ class User extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'id',
     ];
+
+    /**
+     * Return all Urls related to the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function urls()
+    {
+        return $this->hasMany(Url::class);
+    }
 }

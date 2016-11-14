@@ -21,4 +21,14 @@ class Url extends Model
     protected $fillable = [
         'hits', 'url'
     ];
+
+    /**
+     * Return the url Owner.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function urls()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
