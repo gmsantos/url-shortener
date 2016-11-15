@@ -1,6 +1,10 @@
 <?php
 
-class TestCase extends Laravel\Lumen\Testing\TestCase
+namespace App\Test;
+
+use Laravel\Lumen\Testing\TestCase as LumenTestCase;
+
+class TestCase extends LumenTestCase
 {
     /**
      * Creates the application.
