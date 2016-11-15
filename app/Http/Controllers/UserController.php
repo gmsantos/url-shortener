@@ -2,24 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 class UserController extends Controller
 {
     /**
-     * Create a new controller instance.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Create a new User.
+     *
+     * @param Request $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return response('User created');
+        if ($user = User::find($request->json('id'))) {
+            return response($user, Response::HTTP_CONFLICT);
+        }
+
+        $user = User::create($request->all());
+
+        return response($user, Response::HTTP_CREATED);
     }
 
     /**
@@ -31,6 +35,10 @@ class UserController extends Controller
      */
     public function remove($id)
     {
-        return response('User removed:' . $id);
+        if (! User::destroy($id)) {
+            return response(null, Response::HTTP_NOT_FOUND);
+        }
+
+        return response(null);
     }
 }
