@@ -17,7 +17,6 @@ $app->delete('/urls/{id}', 'UrlController@remove');
 $app->get('/stats', 'UrlController@statistics');
 $app->get('/stats/{id}', 'UrlController@view');
 
-$app->get('/users', function () { return App\User::all(); });
 $app->post('/users', 'UserController@create');
 $app->delete('/users/{id}', 'UserController@remove');
 $app->post('/users/{userid}/urls', 'UrlController@create');
