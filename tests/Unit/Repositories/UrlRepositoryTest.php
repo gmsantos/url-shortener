@@ -3,31 +3,34 @@
 namespace App\Test\Unit\Repositories;
 
 use App\Repositories\UrlRepository;
-use App\Url;
 use App\Test\TestCase;
+use App\Url;
+use App\User;
+use Laravel\Lumen\Testing\DatabaseMigrations;
+use Laravel\Lumen\Testing\DatabaseTransactions;
 use Mockery as m;
 
 class UrlRepositoryTest extends TestCase
 {
+    use DatabaseMigrations, DatabaseTransactions;
+
     public function testShouldRetrieveUrlBySlug()
     {
         // Set
-        $slug = 'some-slug';
-        $url = m::mock(Url::class);
+        $slug = 'AQAAAA';
+        $url = 'http://www.chaordic.com.br/folks';
+        $user_id = 'some-user';
         $repository = new UrlRepository();
 
-        // Expectations
-        $url->shouldReceive('find')
-            ->with(1)
-            ->andReturnSelf();
-
-        $this->app->instance(Url::class, $url);
+        factory(User::class)->create(['id' => $user_id]);
+        factory(Url::class)->create(compact('url', 'user_id'));
 
         // Actions
         $result = $repository->findBySlug($slug);
 
         // Assertions
-        $this->assertEquals($url, $result);
+        $this->assertInstanceOf(Url::class, $result);
+        $this->seeInDatabase('urls', $result->attributesToArray());
     }
 
     public function testShouldRetrieveUrlBySlugAndFail()
@@ -35,20 +38,12 @@ class UrlRepositoryTest extends TestCase
         // Set
         $slug = 'some-slug';
         $repository = new UrlRepository();
-        $url = m::mock(Url::class);
-
-        // Expectations
-        $url->shouldReceive('find')
-            ->with(1)
-            ->andReturn(false);
-
-        $this->app->instance(Url::class, $url);
 
         // Actions
         $result = $repository->findBySlug($slug);
 
         // Assertions
-        $this->assertFalse($result);
+        $this->assertNull($result);
     }
 
     public function testShouldCreateANewUrl()
@@ -57,20 +52,15 @@ class UrlRepositoryTest extends TestCase
         $url = 'http://www.chaordic.com.br/folks';
         $user_id = 'some-user';
         $repository = new UrlRepository();
-        $urlModel = m::mock(Url::class);
 
-        // Expectations
-        $url->shouldReceive('create')
-            ->with(compact('user_id', 'url'))
-            ->andReturnSelf();
-
-        $this->app->instance(Url::class, $url);
+        factory(User::class)->create(['id' => $user_id]);
 
         // Actions
         $result = $repository->createUrl($url, $user_id);
 
         // Assertions
-        $this->assertEquals($urlModel, $result);
+        $this->assertInstanceOf(Url::class, $result);
+        $this->seeInDatabase('urls', $result->attributesToArray());
     }
 
     public function testShouldBuildShortUrl()
