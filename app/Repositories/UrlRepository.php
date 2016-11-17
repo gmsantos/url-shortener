@@ -39,8 +39,10 @@ class UrlRepository
             return false;
         }
 
-        $url = new Url();
-        $url->url = $longUrl;
+        $url = new Url([
+            'url' => $longUrl
+        ]);
+
         $url->user()->associate($user);
         $url->save();
 
