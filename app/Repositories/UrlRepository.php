@@ -49,6 +49,11 @@ class UrlRepository
         return $url;
     }
 
+    public function reportStatistics($userId = null)
+    {
+
+    }
+
     /**
      * Present an Url stats
      *

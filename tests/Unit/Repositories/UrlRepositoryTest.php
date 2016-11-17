@@ -85,4 +85,90 @@ class UrlRepositoryTest extends TestCase
         // Assertions
         $this->assertSame($expected, $result);
     }
+
+    public function testShouldReportAllSiteStatistics()
+    {
+        // Set
+        $repository = new UrlRepository();
+
+        factory(Url::class, 50)
+            ->make()
+            ->each(function ($url) {
+                $url->user()->associate(factory(User::class)->make());
+                $url->save();
+            });
+
+        // Simulate queries with Eloquent collections
+        $allResults = Url::all();
+        $hits = $allResults->sum('hits');
+        $urlCount = $allResults->count();
+
+        $top10 = $allResults->sortByDesc('hits')->take(10);
+        $topUrls = [];
+
+        foreach ($top10 as $url) {
+            $topUrls[] = $repository->presentUrlStats($url);
+        }
+
+        $expected = compact('hits', 'urlCount', 'topUrls');
+
+        // Actions
+        $result = $repository->reportStatistics();
+
+        // Assertions
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testShouldReportStatisticsByUser()
+    {
+        // Set
+        $repository = new UrlRepository();
+        $userId = 'some-user';
+        $user = factory(User::class)->make(['id' => $userId]);
+
+        factory(Url::class, 50)
+            ->make()
+            ->each(function ($url) use ($user) {
+                $user = (bool) rand(0, 1)
+                    ? $user
+                    : factory(User::class)->make();
+
+                $url->user()->associate($user);
+                $url->save();
+            });
+
+        // Simulate queries with Eloquent collections
+        $allResults = Url::where(['user_id' => $userId])->get();
+
+        $hits = $allResults->sum('hits');
+        $urlCount = $allResults->count();
+
+        $top10 = $allResults->sortByDesc('hits')->take(10);
+        $topUrls = [];
+
+        foreach ($top10 as $url) {
+            $topUrls[] = $repository->presentUrlStats($url);
+        }
+
+        $expected = compact('hits', 'urlCount', 'topUrls');
+
+        // Actions
+        $result = $repository->reportStatistics($userId);
+
+        // Assertions
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testShouldReportFalseIfInvalidUserIsSupplied()
+    {
+        // Set
+        $repository = new UrlRepository();
+        $userId = 'some-user';
+
+        // Actions
+        $result = $repository->reportStatistics($userId);
+
+        // Assertions
+        $this->assertFalse($result);
+    }
 }
