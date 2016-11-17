@@ -103,7 +103,10 @@ class UrlRepositoryTest extends TestCase
         $hits = $allResults->sum('hits');
         $urlCount = $allResults->count();
 
-        $top10 = $allResults->sortByDesc('hits')->take(10);
+        $top10 = $allResults->sortByDesc(function ($url) {
+            return sprintf('%s|%s', $url->hits, $url->id);
+        })->take(10);
+
         $topUrls = [];
 
         foreach ($top10 as $url) {
@@ -124,7 +127,7 @@ class UrlRepositoryTest extends TestCase
         // Set
         $repository = new UrlRepository();
         $userId = 'some-user';
-        $user = factory(User::class)->make(['id' => $userId]);
+        $user = factory(User::class)->create(['id' => $userId]);
 
         factory(Url::class, 50)
             ->make()
@@ -143,7 +146,10 @@ class UrlRepositoryTest extends TestCase
         $hits = $allResults->sum('hits');
         $urlCount = $allResults->count();
 
-        $top10 = $allResults->sortByDesc('hits')->take(10);
+        $top10 = $allResults->sortByDesc(function ($url) {
+            return sprintf('%s|%s', $url->hits, $url->id);
+        })->take(10);
+
         $topUrls = [];
 
         foreach ($top10 as $url) {
@@ -153,7 +159,7 @@ class UrlRepositoryTest extends TestCase
         $expected = compact('hits', 'urlCount', 'topUrls');
 
         // Actions
-        $result = $repository->reportStatistics($userId);
+        $result = $repository->reportStatisticsByUser($userId);
 
         // Assertions
         $this->assertEquals($expected, $result);
@@ -166,7 +172,7 @@ class UrlRepositoryTest extends TestCase
         $userId = 'some-user';
 
         // Actions
-        $result = $repository->reportStatistics($userId);
+        $result = $repository->reportStatisticsByUser($userId);
 
         // Assertions
         $this->assertFalse($result);

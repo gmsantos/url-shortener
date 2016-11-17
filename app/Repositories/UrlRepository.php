@@ -49,9 +49,54 @@ class UrlRepository
         return $url;
     }
 
-    public function reportStatistics($userId = null)
+    /**
+     * Report site statistics.
+     *
+     * @return bool
+     */
+    public function reportStatistics()
     {
+        $hits = (int) Url::sum('hits');
+        $urlCount = Url::count();
+        $topUrlsResult = Url::orderBy('hits', 'desc')
+            ->limit(10)
+            ->get();
 
+        $topUrls = [];
+
+        foreach ($topUrlsResult as $url) {
+            $topUrls[] = $this->presentUrlStats($url);
+        }
+
+        return compact('hits', 'urlCount', 'topUrls');
+    }
+
+    /**
+     * Report user statistics.
+     *
+     * @param string $userId
+     *
+     * @return bool
+     */
+    public function reportStatisticsByUser($userId)
+    {
+        if (is_null(User::find($userId))){
+            return false;
+        }
+
+        $hits = (int) Url::where(['user_id' => $userId])->sum('hits');
+        $urlCount = Url::where(['user_id' => $userId])->count();
+        $topUrlsResult = Url::where(['user_id' => $userId])->orderBy('hits', 'desc')
+            ->limit(10)
+            ->get();
+
+        $topUrls = [];
+
+        foreach ($topUrlsResult as $url) {
+            $topUrls[] = $this->presentUrlStats($url);
+        }
+
+        return compact('hits', 'urlCount', 'topUrls');
     }
 
     /**
