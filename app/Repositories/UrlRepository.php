@@ -12,24 +12,6 @@ use App\User;
 class UrlRepository
 {
     /**
-     * This method takes an Url id and cipher to use in short Url.
-     *
-     * @see http://stackoverflow.com/a/3514622/2099835
-     *
-     * @param $urlId
-     *
-     * @return string
-     */
-    public function buildShortUrl($urlId)
-    {
-        return strtr(
-            rtrim(base64_encode(pack('i', $urlId)), '='),
-            '+/',
-            '-_'
-        );
-    }
-
-    /**
      * Decode a slug to a simple database Url id.
      *
      * @see http://stackoverflow.com/a/3514622/2099835
@@ -38,7 +20,7 @@ class UrlRepository
      *
      * @return mixed
      */
-    public function decodeShortUrl($slug)
+    protected function decodeShortUrl($slug)
     {
         $id = unpack(
             'i',

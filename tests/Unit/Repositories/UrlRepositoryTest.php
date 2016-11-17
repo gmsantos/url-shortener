@@ -8,7 +8,6 @@ use App\Url;
 use App\User;
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
-use Mockery as m;
 
 class UrlRepositoryTest extends TestCase
 {
@@ -61,33 +60,5 @@ class UrlRepositoryTest extends TestCase
         // Assertions
         $this->assertInstanceOf(Url::class, $result);
         $this->seeInDatabase('urls', $result->attributesToArray());
-    }
-
-    public function testShouldBuildShortUrl()
-    {
-        // Set
-        $urlId = 1;
-        $repository = new UrlRepository();
-        $expectedSlug = 'AQAAAA';
-
-        // Actions
-        $result = $repository->buildShortUrl($urlId);
-
-        // Assertions
-        $this->assertEquals($expectedSlug, $result);
-    }
-
-    public function testShouldDecodeShortUrl()
-    {
-        // Set
-        $slug = 'AQAAAA';
-        $repository = new UrlRepository();
-        $urlId = 1;
-
-        // Actions
-        $result = $repository->decodeShortUrl($slug);
-
-        // Assertions
-        $this->assertEquals($urlId, $result);
     }
 }
