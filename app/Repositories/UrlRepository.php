@@ -48,6 +48,23 @@ class UrlRepository
     }
 
     /**
+     * Present an Url stats
+     *
+     * @param Url $url
+     *
+     * @return array
+     */
+    public function presentUrlStats(Url $url)
+    {
+        return [
+            'id' => (string) $url->id,
+            'hits' => (int) $url->hits,
+            'url' => $url->url,
+            'shortUrl' => $url->shortUrl,
+        ];
+    }
+
+    /**
      * Decode a slug to a simple database Url id.
      *
      * @see http://stackoverflow.com/a/3514622/2099835

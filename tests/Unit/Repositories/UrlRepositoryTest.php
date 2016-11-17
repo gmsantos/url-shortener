@@ -61,4 +61,28 @@ class UrlRepositoryTest extends TestCase
         $this->assertInstanceOf(Url::class, $result);
         $this->seeInDatabase('urls', $result->attributesToArray());
     }
+
+    public function testPresentAnUrlStats()
+    {
+        // Set
+        $url = new Url();
+        $url->id = 1;
+        $url->hits = 15;
+        $url->url = 'http://www.chaordic.com.br/folks';
+
+        $repository = new UrlRepository();
+
+        $expected = [
+            'id' => '1',
+            'hits' => 15,
+            'url' => 'http://www.chaordic.com.br/folks',
+            'shortUrl' => 'http://localhost/urls/AQAAAA'
+        ];
+
+        // Actions
+        $result = $repository->presentUrlStats($url);
+
+        // Assertions
+        $this->assertSame($expected, $result);
+    }
 }
