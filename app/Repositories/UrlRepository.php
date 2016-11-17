@@ -12,27 +12,6 @@ use App\User;
 class UrlRepository
 {
     /**
-     * Decode a slug to a simple database Url id.
-     *
-     * @see http://stackoverflow.com/a/3514622/2099835
-     *
-     * @param $slug
-     *
-     * @return mixed
-     */
-    protected function decodeShortUrl($slug)
-    {
-        $id = unpack(
-            'i',
-            base64_decode(
-                str_pad(strtr($slug, '-_', '+/'), strlen($slug) % 4, '=')
-            )
-        );
-
-        return $id[1];
-    }
-
-    /**
      * Try to find an Url by an encoded slug.
      *
      * @param $urlSlug
@@ -66,5 +45,26 @@ class UrlRepository
         $url->save();
 
         return $url;
+    }
+
+    /**
+     * Decode a slug to a simple database Url id.
+     *
+     * @see http://stackoverflow.com/a/3514622/2099835
+     *
+     * @param $slug
+     *
+     * @return mixed
+     */
+    protected function decodeShortUrl($slug)
+    {
+        $id = unpack(
+            'i',
+            base64_decode(
+                str_pad(strtr($slug, '-_', '+/'), strlen($slug) % 4, '=')
+            )
+        );
+
+        return $id[1];
     }
 }
