@@ -33,13 +33,13 @@ class Url extends Model
     }
 
     /**
-     * Build the relative short url.
+     * Build the short Url.
      *
      * @return string
      */
     public function getShortUrlAttribute()
     {
-        return sprintf('/urls/%s', $this->buildShortUrlSlug($this->id));
+        return url(sprintf('/urls/%s', $this->buildShortUrlSlug($this->id)));
     }
 
     /**

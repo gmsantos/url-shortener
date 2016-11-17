@@ -12,7 +12,7 @@ class UrlTest extends TestCase
         // Set
         $url = new Url();
         $url->id = 1;
-        $expectedUrl = '/urls/AQAAAA';
+        $expectedUrl = 'http://localhost/urls/AQAAAA';
 
         // Assertions
         $this->assertEquals($expectedUrl, $url->shortUrl);
