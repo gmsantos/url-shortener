@@ -18,12 +18,12 @@ class UserController extends Controller
     public function create(Request $request)
     {
         if ($user = User::find($request->json('id'))) {
-            return response($user, Response::HTTP_CONFLICT);
+            return response()->json($user, Response::HTTP_CONFLICT);
         }
 
         $user = User::create($request->all());
 
-        return response($user, Response::HTTP_CREATED);
+        return response()->json($user, Response::HTTP_CREATED);
     }
 
     /**
@@ -36,9 +36,9 @@ class UserController extends Controller
     public function remove($id)
     {
         if (! User::destroy($id)) {
-            return response(null, Response::HTTP_NOT_FOUND);
+            return response()->json(null, Response::HTTP_NOT_FOUND);
         }
 
-        return response(null);
+        return response()->json();
     }
 }

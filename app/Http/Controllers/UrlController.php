@@ -2,14 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\UrlWasHit;
+use App\Repositories\UrlRepository;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 class UrlController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * @var UrlRepository
      */
-    public function __construct()
+    private $repository;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @param UrlRepository $repository
+     */
+    public function __construct(UrlRepository $repository)
     {
-        //
+        $this->repository = $repository;
     }
 
     /**
@@ -21,7 +33,13 @@ class UrlController extends Controller
      */
     public function redirectFromId($id)
     {
-        return response('Redirect to : ' . $id);
+        if (is_null($url = $this->repository->findBySlug($id))){
+            return response()->json(null, Response::HTTP_NOT_FOUND);
+        }
+
+        $this->dispatch(new UrlWasHit($url));
+
+        return redirect($url->url, Response::HTTP_MOVED_PERMANENTLY);
     }
 
     /**
@@ -33,19 +51,30 @@ class UrlController extends Controller
      */
     public function view($id)
     {
-        return response('Show info : ' . $id);
+        if (is_null($url = $this->repository->findBySlug($id))){
+            return response()->json(null, Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json($this->repository->presentUrlStats($url));
     }
 
     /**
      * Given a specific user, create a new short url.
      *
      * @param $userId
+     * @param Request $request
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function create($userId)
+    public function create(Request $request, $userId)
     {
-        return response('Create new Url for user : ' . $userId);
+        $url = $request->json('url');
+        if (false === $model = $this->repository->createUrl($url, $userId)) {
+            return response()->json(null, Response::HTTP_NOT_FOUND);
+        }
+
+        return response()
+            ->json($this->repository->presentUrlStats($model), Response::HTTP_CREATED);
     }
 
     /**
@@ -57,7 +86,11 @@ class UrlController extends Controller
      */
     public function remove($id)
     {
-        return response('Remove : ' . $id);
+        if (! $this->repository->removeBySlug($id)) {
+            return response()->json(null, Response::HTTP_NOT_FOUND);
+        }
+
+        return response(null);
     }
 
     /**
@@ -67,7 +100,7 @@ class UrlController extends Controller
      */
     public function statistics()
     {
-        return response('Statistics');
+        return response()->json($this->repository->reportStatistics());
     }
 
     /**
@@ -79,6 +112,10 @@ class UrlController extends Controller
      */
     public function statisticsByUser($userId)
     {
-        return response('Statistics for user: ' . $userId);
+        if (false === $report = $this->repository->reportStatisticsByUser($userId)) {
+            return response()->json(null, Response::HTTP_NOT_FOUND);
+        }
+
+        return response()->json($report);
     }
 }

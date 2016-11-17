@@ -26,6 +26,20 @@ class UrlRepository
     }
 
     /**
+     * Try to find an Url by an encoded slug.
+     *
+     * @param $urlSlug
+     *
+     * @return int
+     */
+    public function removeBySlug($urlSlug)
+    {
+        $id = $this->decodeShortUrl($urlSlug);
+
+        return Url::destroy($id);
+    }
+
+    /**
      * Create a new Url for a specific user.
      *
      * @param $longUrl
