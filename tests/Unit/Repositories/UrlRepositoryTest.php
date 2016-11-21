@@ -17,7 +17,7 @@ class UrlRepositoryTest extends TestCase
     {
         // Set
         $slug = 'AQAAAA';
-        $url = 'http://www.chaordic.com.br/folks';
+        $url = 'https://www.meetup.com/Laravel-SP/events/235646070/';
         $user_id = 'some-user';
         $repository = new UrlRepository();
 
@@ -48,7 +48,7 @@ class UrlRepositoryTest extends TestCase
     public function testShouldCreateANewUrl()
     {
         // Set
-        $url = 'http://www.chaordic.com.br/folks';
+        $url = 'https://www.meetup.com/Laravel-SP/events/235646070/';
         $user_id = 'some-user';
         $repository = new UrlRepository();
 
@@ -68,14 +68,14 @@ class UrlRepositoryTest extends TestCase
         $url = new Url();
         $url->id = 1;
         $url->hits = 15;
-        $url->url = 'http://www.chaordic.com.br/folks';
+        $url->url = 'https://www.meetup.com/Laravel-SP/events/235646070/';
 
         $repository = new UrlRepository();
 
         $expected = [
             'id' => '1',
             'hits' => 15,
-            'url' => 'http://www.chaordic.com.br/folks',
+            'url' => 'https://www.meetup.com/Laravel-SP/events/235646070/',
             'shortUrl' => 'http://localhost/urls/AQAAAA'
         ];
 
