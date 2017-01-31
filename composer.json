@@ -1,7 +1,7 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "gmsantos/url-shorter",
+    "description": "Url shorter API using Lumen Framework.",
+    "keywords": ["url-shorter", "api", "laravel", "lumen"],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -31,7 +31,5 @@
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
         ]
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
