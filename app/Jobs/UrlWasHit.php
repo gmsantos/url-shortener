@@ -28,10 +28,8 @@ class UrlWasHit extends Job
      */
     public function handle()
     {
-        $hits = $this->url->hits;
+        $this->url->increment('hits');
 
-        $this->url->hits = ++$hits;
-
-        $this->url->save();
+        $this->url->update();
     }
 }
