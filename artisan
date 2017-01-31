@@ -28,10 +28,6 @@ $app = require __DIR__.'/bootstrap/app.php';
 |
 */
 
-if(class_exists('Vluzrmos\Tinker\TinkerServiceProvider')) {
-    $app->register('Vluzrmos\Tinker\TinkerServiceProvider');
-}
-
 $kernel = $app->make(
     'Illuminate\Contracts\Console\Kernel'
 );
