@@ -91,7 +91,7 @@ class UrlRepositoryTest extends TestCase
         // Set
         $repository = new UrlRepository();
 
-        factory(Url::class, 50)
+        factory(Url::class, 10)
             ->make()
             ->each(function ($url) {
                 $url->user()->associate(factory(User::class)->make());
@@ -103,9 +103,7 @@ class UrlRepositoryTest extends TestCase
         $hits = $allResults->sum('hits');
         $urlCount = $allResults->count();
 
-        $top10 = $allResults->sortByDesc(function ($url) {
-            return sprintf('%s|%s', $url->hits, $url->id);
-        })->take(10);
+        $top10 = $allResults->sortByDesc('hits');
 
         $topUrls = [];
 
@@ -129,7 +127,7 @@ class UrlRepositoryTest extends TestCase
         $userId = 'some-user';
         $user = factory(User::class)->create(['id' => $userId]);
 
-        factory(Url::class, 50)
+        factory(Url::class, 10)
             ->make()
             ->each(function ($url) use ($user) {
                 $user = (bool) rand(0, 1)
@@ -146,9 +144,7 @@ class UrlRepositoryTest extends TestCase
         $hits = $allResults->sum('hits');
         $urlCount = $allResults->count();
 
-        $top10 = $allResults->sortByDesc(function ($url) {
-            return sprintf('%s|%s', $url->hits, $url->id);
-        })->take(10);
+        $top10 = $allResults->sortByDesc('hits');
 
         $topUrls = [];
 
