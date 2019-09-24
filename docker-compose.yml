@@ -22,15 +22,16 @@ services:
   app:
     image: php:7.0-apache
     volumes:
-      - .:/var/www/app
+      - .:/var/www/html
     ports:
       - "80:80"
 
   queue:
     image: php:7.0
     command: php artisan queue:listen
+    working_dir: /var/app
     volumes:
-      - .:/var/www/app
+      - .:/var/app
 
 volumes:
   mysql-data:

@@ -30,6 +30,11 @@
             "database/"
         ]
     },
+    "config": {
+        "platform": {
+            "php": "7.0"
+        }
+    },
     "scripts": {
         "post-root-package-install": [
             "php -r \"copy('.env.example', '.env');\""
