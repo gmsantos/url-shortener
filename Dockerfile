@@ -1,4 +1,4 @@
-FROM php:7.0-apache
+FROM php:7.2-apache
 
 RUN docker-php-ext-install pdo_mysql \
  && pecl install redis-5.0.2 \

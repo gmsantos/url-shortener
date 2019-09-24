@@ -11,13 +11,13 @@
 |
 */
 
-$app->get('/urls/{id}', 'UrlController@redirectFromId');
-$app->delete('/urls/{id}', 'UrlController@remove');
+$router->get('/urls/{id}', 'UrlController@redirectFromId');
+$router->delete('/urls/{id}', 'UrlController@remove');
 
-$app->get('/stats', 'UrlController@statistics');
-$app->get('/stats/{id}', 'UrlController@view');
+$router->get('/stats', 'UrlController@statistics');
+$router->get('/stats/{id}', 'UrlController@view');
 
-$app->post('/users', 'UserController@create');
-$app->delete('/users/{id}', 'UserController@remove');
-$app->post('/users/{userid}/urls', 'UrlController@create');
-$app->get('/users/{userid}/stats', 'UrlController@statisticsByUser');
+$router->post('/users', 'UserController@create');
+$router->delete('/users/{id}', 'UserController@remove');
+$router->post('/users/{userid}/urls', 'UrlController@create');
+$router->get('/users/{userid}/stats', 'UrlController@statisticsByUser');

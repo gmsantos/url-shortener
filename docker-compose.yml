@@ -22,7 +22,8 @@ services:
   app:
     build:
       context: .
-    image: url-shortener-app:lumen-5.4
+      dockerfile: Dockerfile
+    image: url-shortener-app:lumen-6.0
     volumes:
       - .:/var/www/html
     ports:
@@ -32,11 +33,13 @@ services:
       - redis
 
   queue:
-    image: php:7.0
-    command: php artisan queue:listen
-    working_dir: /var/app
+    build:
+      context: .
+      dockerfile: Dockerfile-queue
+    image: url-shortener-queue:lumen-6.0
+    command: php artisan queue:work --verbose --tries=3 --timeout=90
     volumes:
-      - .:/var/app
+      - .:/var/src/app
     depends_on: 
       - mysql
       - redis
