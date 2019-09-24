@@ -1,7 +1,7 @@
 {
-    "name": "gmsantos/url-shorter",
-    "description": "Url shorter API using Lumen Framework.",
-    "keywords": ["url-shorter", "api", "laravel", "lumen"],
+    "name": "gmsantos/url-shortener",
+    "description": "Url shortener API using Lumen Framework.",
+    "keywords": ["url-shortener", "api", "laravel", "lumen"],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -9,13 +9,13 @@
         "laravel/lumen-framework": "5.4.*",
         "illuminate/redis": "5.4.*",
         "laravel/tinker": "^1.0",
-        "vlucas/phpdotenv": "~2.2",
+        "vlucas/phpdotenv": "^2.2",
         "predis/predis": "^1.1"
     },
     "require-dev": {
-        "fzaninotto/faker": "~1.4",
-        "phpunit/phpunit": "~5.0",
-        "mockery/mockery": "~0.9"
+        "fzaninotto/faker": "^1.4",
+        "phpunit/phpunit": "^5.0",
+        "mockery/mockery": "^0.9"
     },
     "autoload": {
         "psr-4": {
