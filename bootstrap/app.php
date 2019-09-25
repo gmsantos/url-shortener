@@ -99,4 +99,16 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
+/*
+|--------------------------------------------------------------------------
+| Loading custom logging configuration
+|--------------------------------------------------------------------------
+|
+| This will make possible to configure application logging using
+| tht full potential of Monolog!
+|
+*/
+
+$app->configure('logging');
+
 return $app;

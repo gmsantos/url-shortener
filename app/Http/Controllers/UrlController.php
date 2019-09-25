@@ -6,6 +6,7 @@ use App\Jobs\UrlWasHit;
 use App\Repositories\UrlRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Psr\Log\LoggerInterface;
 
 class UrlController extends Controller
 {
@@ -98,8 +99,9 @@ class UrlController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function statistics()
+    public function statistics(LoggerInterface $logger)
     {
+        $logger->info('test');
         return response()->json($this->repository->reportStatistics());
     }
 
