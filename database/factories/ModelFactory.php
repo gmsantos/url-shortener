@@ -20,7 +20,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 $factory->define(App\Url::class, function (Faker\Generator $faker) {
     return [
         'url' => $faker->url,
-        'hits' => $faker->numberBetween(1, 100),
+        'hits' => $faker->unique()->numberBetween(1, 100),
     ];
 });
 
