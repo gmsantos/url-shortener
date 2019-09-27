@@ -8,7 +8,8 @@
         "php": "^7.2",
         "laravel/lumen-framework": "^6.0",
         "illuminate/redis": "^6.0",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "elasticsearch/elasticsearch": "^7.2"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.4",

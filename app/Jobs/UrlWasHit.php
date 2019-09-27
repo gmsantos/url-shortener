@@ -11,6 +11,7 @@ class UrlWasHit extends Job
      */
     private $url;
 
+
     /**
      * Create a new job instance.
      *
@@ -26,8 +27,10 @@ class UrlWasHit extends Job
      *
      * @return void
      */
-    public function handle()
+    public function handle(\Psr\Log\LoggerInterface $logger)
     {
+        $logger->info('URL hit', ['url' => $this->url->shortUrl]);
+
         $this->url->increment('hits');
 
         $this->url->update();
