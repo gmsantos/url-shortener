@@ -89,7 +89,7 @@ return [
             'level' => 'debug',
         ],
 
-        'custom' => [
+        'elastic' => [
             'driver' => 'custom',
             'via' => env('LOG_CUSTOM_LOGGER'),
         ],
