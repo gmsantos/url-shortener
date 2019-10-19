@@ -11,6 +11,11 @@
 |
 */
 
+$router->get('/', function () {
+    return 'Oktober Cloud 2019';
+});
+
+
 $router->get('/urls/{id}', 'UrlController@redirectFromId');
 $router->delete('/urls/{id}', 'UrlController@remove');
 
