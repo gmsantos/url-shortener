@@ -21,5 +21,5 @@ jobs:
     # deploy web app using publish profile credentials
     - uses: azure/webapps-deploy@v1
       with: 
-        app-name: oktobercloud2019
+        app-name: php-url-shortener
         publish-profile: ${{ secrets.azureWebAppPublishProfile }}
