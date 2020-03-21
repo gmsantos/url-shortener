@@ -12,7 +12,7 @@
 */
 
 $router->get('/', function () {
-    return 'Oktober Cloud 2019';
+    return 'Welcome!';
 });
 
 
