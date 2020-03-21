@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     # checkout the repo
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v2
 
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
@@ -19,7 +19,7 @@ jobs:
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
 
     # deploy web app using publish profile credentials
-    - uses: azure/webapps-deploy@v1
+    - uses: azure/webapps-deploy@v2
       with: 
-        app-name: oktobercloud2019
+        app-name: php-url-shortener
         publish-profile: ${{ secrets.azureWebAppPublishProfile }}
