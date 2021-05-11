@@ -6,8 +6,10 @@ jobs:
   laravel-tests:
     runs-on: ubuntu-latest
     steps:
-
     - uses: actions/checkout@v2
+    - uses: nanasess/setup-php@v3.0.8
+      with:
+        php-version: '7.4'
 
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
