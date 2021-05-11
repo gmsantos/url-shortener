@@ -11,7 +11,6 @@ class UrlWasHit extends Job
      */
     private $url;
 
-
     /**
      * Create a new job instance.
      *
