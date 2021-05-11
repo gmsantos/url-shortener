@@ -1,7 +1,15 @@
-FROM php:7.2-apache
+FROM php:7.4-cli as queue
+
+WORKDIR /var/src/app
 
 RUN docker-php-ext-install pdo_mysql \
- && pecl install redis-5.0.2 \
+ && pecl install redis-5.3.2 \
+ && docker-php-ext-enable redis
+
+FROM php:7.4-apache as web
+
+RUN docker-php-ext-install pdo_mysql \
+ && pecl install redis-5.3.2 \
  && docker-php-ext-enable redis
 
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
