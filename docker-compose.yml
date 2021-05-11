@@ -32,7 +32,7 @@ services:
       - mysql
       - redis
 
-  queue:
+  queue-gambeta:
     build:
       context: .
       dockerfile: Dockerfile-queue
