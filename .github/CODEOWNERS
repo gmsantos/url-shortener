@@ -1,2 +1,3 @@
 * @ravanscafi
+.github/CODEOWNERS  @diegomarangoni
 .github/workflows/deploy.yml  @diegomarangoni
