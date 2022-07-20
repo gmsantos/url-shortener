@@ -24,6 +24,8 @@ services:
       context: .
       target: runtime
     image: 823048886684.dkr.ecr.us-east-1.amazonaws.com/php-url-api:live
+    env_file:
+      - .env
     volumes:
       - .:/var/www/html
     ports:
@@ -37,6 +39,8 @@ services:
       context: .
       target: queue
     image: url-shortener-queue:lumen-6.0
+    env_file:
+      - .env
     command: php artisan queue:work --verbose --tries=3 --timeout=90
     volumes:
       - .:/var/src/app
