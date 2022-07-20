@@ -23,7 +23,7 @@ services:
     build:
       context: .
       target: runtime
-    image: url-shortener-app:lumen-6.0
+    image: 823048886684.dkr.ecr.us-east-1.amazonaws.com/php-url-api:live
     volumes:
       - .:/var/www/html
     ports:
